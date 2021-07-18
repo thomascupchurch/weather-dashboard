@@ -1,0 +1,12 @@
+header {
+    box-sizing: border-box;
+    border: 5px;
+    border-color: aquamarine;
+    background-color: darkblue;
+    font: white;
+    font-weight: bold;
+    font-family:'Times New Roman', Times, serif;
+    font-style: normal;
+    font-size: larger;
+    height: 20px;
+}
