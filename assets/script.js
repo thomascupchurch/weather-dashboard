@@ -39,15 +39,19 @@ function clickBtn() {
     var geoCall = "http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + localStorage.getItem('city') + "," + localStorage.getItem('state'); 
 
     function getLatLong() {
-        fetch(geoCall)
+        // fetch(geoCall)
+        fetch("http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + localStorage.getItem('city') + "," + localStorage.getItem('state'))
             .then(response => {
                 if (response.status === 200) {
-                    return response.json()
-                            .then(data => console.log(data));
+                    return response.json();
+                    
                 } else {
                     throw new Error('Something went wrong on api server!');
                 }
-            });            
+            }); 
+            var latitude = response.results[0].locations[0].displayLatLng.lat;
+            var longitude = results[0].locations[0].displayLatLng.lng;
+            console.log(latitude, longitude);           
         }
 
     getLatLong();
