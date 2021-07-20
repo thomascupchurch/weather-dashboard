@@ -1,3 +1,12 @@
+
+var loadFunction = function() {
+    document.getElementById("city-input").value = localStorage.getItem('city');
+    document.getElementById("state-input").value = localStorage.getItem('state');
+};
+
+loadFunction();
+
+
 let lat = "35";
 
 let lon = "90";
@@ -8,27 +17,50 @@ const API_key = "3e3a8f9018bbc2c4f3ff15318e09efc6";
 
 var apiCall = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=" + part + "&appid=" + API_key;
 
-let city = "Memphis";
+// var city = document.getElementById("city-input").value;
 
-let state = "TN";
+// var state = document.getElementById("state-input").value;
+
+// var geoLocation = (document.getElementById("city-input").value + ", " + document.getElementById("state-input").value);
 
 const geoKey = "sSeG8IzoZGYpxJxzrfbl21xhjdOKmvan"
 
-var geoCall = ("http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + city + ", " + state); 
+var geoCall = ("http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + localStorage.getItem('city') + "," + localStorage.getItem('state')); 
 
 // var locationRequest;
     // document.getElementById("location-btn").addEventListener('click', makeLocationRequest);
     
+    // var locationInput = document.getElementById()
+    // city + ", " + state;
+
+    // locationInput.addEventListener('click', getPlaces()) 
     
+    // function getPlaces() {
+        
+    //         console.log("text entered");
+    //         // localStorage.getItem(key, value);
+            
+    //     };
     var locationButton = document.getElementById("location-btn");
-    locationButton.click(
-        function() {
-            localStorage.setItem('location', 'locationInput.value');
-            console.log(locationInput.value);
-        }
-    )
+    locationButton.addEventListener('click', clickBtn());
+
+    function clickBtn() {
+        var city = document.getElementById("city-input").value;
+
+        var state = document.getElementById("state-input").value;
+
+        var geoLocation = (document.getElementById("city-input").value + ", " + document.getElementById("state-input").value);
     
-    var locationInput = document.getElementById("location-input");
+        function savePlace() {
+            console.log(geoLocation);
+            localStorage.setItem('city', city);
+            localStorage.setItem('state', state);  
+        }
+        savePlace();
+    };
+    
+    
+    
 //     let userLocation = document.getElementById("location-input").value;
 
 

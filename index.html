@@ -5,23 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
-    <link
-      rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" 
     />
     <link href="assets/style.css" rel="stylesheet"/>
 </head>
 <body>
     <header>
-        <div>
-            WeatherDashboard
+        <div id="title">
+           <p id="title">Weather Dashboard</p> 
         </div>
     </header>
 
     <section class="row">
         <div class="col-3">
-            Search for a city:
-            <input id="city-input" type="search"/>
-            <button type="submit">Search</button>
+            <input id="city-input" type="text" placeholder="City">
+            <input id="state-input" type="text" placeholder="State (two letters)">
+        <button id="location-btn">Click Here</button>
         </div>
 
         <div class="col-9">
@@ -40,11 +39,12 @@
         <button id="ajaxButton" type="button">Make a request</button>
     </section>
     <section>
-        <input id="location-input" type="text" placeholder="City, ST">
-        <button id="location-btn">Click Here</button>
+        
     </section>
 
-    <script src="assets/jquery-3.6.0.slim.min.js"></script>
+
+    <!--<script src="/javascripts/jquery.js" type="text/javascript"></script>-->
+    <script src="assets/jquery-3.6.0.slim.min.js" type="text/javascript"></script>
     <script src="assets/script.js"></script>
 
 </body>
