@@ -1,4 +1,5 @@
 
+// function to repopulate city and state with saved data
 var loadFunction = function() {
     document.getElementById("city-input").value = localStorage.getItem('city');
     document.getElementById("state-input").value = localStorage.getItem('state');
@@ -6,6 +7,74 @@ var loadFunction = function() {
 
 loadFunction();
 
+
+// function for saving location when button is clicked
+var locationButton = document.getElementById("location-btn");
+locationButton.addEventListener('click', clickBtn());
+
+function clickBtn() {
+    var city = document.getElementById("city-input").value;
+
+    var state = document.getElementById("state-input").value;
+
+    
+
+    function savePlace() {
+        console.log(city, state);
+        localStorage.setItem('city', city);
+        localStorage.setItem('state', state);  
+    }
+    savePlace();
+};
+
+
+// var geoLocation = (document.getElementById("city-input").value + ", " + document.getElementById("state-input").value);
+
+    var city = document.getElementById("city-input").value;
+
+    var state = document.getElementById("state-input").value;
+
+    var geoKey = "sSeG8IzoZGYpxJxzrfbl21xhjdOKmvan";
+
+    var geoCall = "http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + localStorage.getItem('city') + "," + localStorage.getItem('state'); 
+
+    function getLatLong() {
+        fetch(geoCall)
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json()
+                            .then(data => console.log(data));
+                } else {
+                    throw new Error('Something went wrong on api server!');
+                }
+            });            
+        }
+
+    getLatLong();
+
+
+
+
+
+
+// var getWeather = function() {
+//    fetch(apiCall)
+//     .then(response => {
+//         if (response.status === 200) {
+//             return response.json();
+//           } else {
+//             throw new Error('Something went wrong on api server!');
+//           }
+//     })
+//     console.log(response.json());
+
+// }
+
+// getWeather();
+
+
+
+// function to submit city, state data to to api and return latitude and longitude
 
 let lat = "35";
 
@@ -17,15 +86,12 @@ const API_key = "3e3a8f9018bbc2c4f3ff15318e09efc6";
 
 var apiCall = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=" + part + "&appid=" + API_key;
 
-// var city = document.getElementById("city-input").value;
-
-// var state = document.getElementById("state-input").value;
 
 // var geoLocation = (document.getElementById("city-input").value + ", " + document.getElementById("state-input").value);
 
-const geoKey = "sSeG8IzoZGYpxJxzrfbl21xhjdOKmvan"
+// const geoKey = "sSeG8IzoZGYpxJxzrfbl21xhjdOKmvan"
 
-var geoCall = ("http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + localStorage.getItem('city') + "," + localStorage.getItem('state')); 
+// var geoCall = ("http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + localStorage.getItem('city') + "," + localStorage.getItem('state')); 
 
 // var locationRequest;
     // document.getElementById("location-btn").addEventListener('click', makeLocationRequest);
@@ -41,23 +107,8 @@ var geoCall = ("http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey 
     //         // localStorage.getItem(key, value);
             
     //     };
-    var locationButton = document.getElementById("location-btn");
-    locationButton.addEventListener('click', clickBtn());
 
-    function clickBtn() {
-        var city = document.getElementById("city-input").value;
 
-        var state = document.getElementById("state-input").value;
-
-        var geoLocation = (document.getElementById("city-input").value + ", " + document.getElementById("state-input").value);
-    
-        function savePlace() {
-            console.log(geoLocation);
-            localStorage.setItem('city', city);
-            localStorage.setItem('state', state);  
-        }
-        savePlace();
-    };
     
     
     
@@ -78,20 +129,7 @@ var geoCall = ("http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey 
 // const request = new Request(apiCall);
 
 
-// var getWeather = function() {
-//    fetch(apiCall)
-//     .then(response => {
-//         if (response.status === 200) {
-//             return response.json();
-//           } else {
-//             throw new Error('Something went wrong on api server!');
-//           }
-//     })
-//     console.log(response.json());
 
-// }
-
-// getWeather();
 
 
 
