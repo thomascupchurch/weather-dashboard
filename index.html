@@ -20,40 +20,44 @@
         <div class="col-3">
             <input id="city-input" type="text" placeholder="City">
             <input id="state-input" type="text" placeholder="State (two letters)">
-        <button id="location-btn">Click Here</button>
+        <button id="location-btn" onclick=clickBtn()>Click Here</button>
         </div>
 
         <div class="col-9">
             <div>
+                <h2>5-Day Forecast</h2>
                 <p id='weather-description'></p>
             </div>
             <div class="row">
                 <div class="col-2">
                     <h2>Day 1</h2>
-                    <card></card>
+                    <card id="day-1"></card>
                 </div>
                 <div class="col-2">
                     <h2>Day 2</h2>
-                    <card></card>
+                    <card id="day-2"></card>
                 </div>
                 <div class="col-2">
                     <h2>Day 3</h2>
-                    <card></card>
+                    <card id="day-3"></card>
                 </div>
                 <div class="col-2">
                     <h2>Day 4</h2>
-                    <card></card>
+                    <card id="day-4"></card>
                 </div>
                 <div class="col-2">
                     <h2>Day 5</h2>
-                    <card></card>
+                    <card id="day-5"></card>
                 </div>
                 
             </div>
         </div>
     </section>
     <section>
-        <button id="ajaxButton" type="button">Make a request</button>
+        <h2>Current Conditions</h2>
+        <div id='current-conditions'>
+        
+        </div>
     </section>
     <section>
         

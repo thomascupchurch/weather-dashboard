@@ -70,22 +70,38 @@ function getLatLong(city, state) {
     // get weather using lat and long from geoCall
     function getWeather(lat, lon) {
         const API_key = "3e3a8f9018bbc2c4f3ff15318e09efc6";
-        var apiCall = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + API_key;
+        var apiCall = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial" +
+        "&appid=" + API_key;
         fetch(apiCall)
          .then(response => {
              if (response.status === 200) {
                  return response.json()
                  .then(post => {
                      console.log(post.current.weather[0].description);
-                     var weatherDescription = toString(post.current.weather[0].description.value);
-                     
-                        document.getElementById("weather-description").innerText = weatherDescription;
+                     document.getElementById('current-conditions').textContent = post.current.weather[0].description;
+                    //  let weatherDescription = post.current.weather[0].description.value;
+                        // descriptionBox.textContent = weatherDescription;
+                        // console.log(weatherDescription);
+                    document.getElementById('day-1').textContent = Math.floor(post.daily[0].temp.day);
+                    document.getElementById('day-2').textContent = Math.floor(post.daily[1].temp.day);
+                    document.getElementById('day-3').textContent = Math.floor(post.daily[2].temp.day);
+                    document.getElementById('day-4').textContent = Math.floor(post.daily[3].temp.day);
+                    document.getElementById('day-5').textContent = Math.floor(post.daily[4].temp.day);
                  });
                } else {
                  throw new Error('Something went wrong on api server!');
                };
+               
          }
          )};
+         
+    
+         var today = 
+         var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', "Sunday"];
+         
+         function getDays(today) {
+
+         }
          
 
 
