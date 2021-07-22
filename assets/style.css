@@ -12,5 +12,8 @@ header {
 
 #title {
     font: white;
-    
+}
+
+#current-card {
+    background-color: lightblue;
 }
