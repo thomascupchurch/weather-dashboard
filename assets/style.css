@@ -11,7 +11,7 @@ header {
 }
 
 #title {
-    font: white;
+    color: white;
 }
 
 #current-card {
@@ -19,13 +19,16 @@ header {
 }
 
 .favorable-UV {
+    border: lightgreen;
     background-color:lightgreen;
 }
 
 .moderate-UV {
+    border: yellow;
     background-color:yellow;
 }
 
 .severe-UV {
+    border:orangered;
     background-color:orangered;
 }

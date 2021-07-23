@@ -24,15 +24,19 @@ const geoKey = "sSeG8IzoZGYpxJxzrfbl21xhjdOKmvan";
 
 // function for saving location when button is clicked
 var locationButton = document.getElementById("location-btn");
-locationButton.addEventListener('click', clickBtn());
+locationButton.addEventListener('click', clickBtn);
     
 
-function clickBtn(city, state) {
+function clickBtn() {
+    console.log("yes");
     var city = document.getElementById("city-input").value;
     var state = document.getElementById("state-input").value;
     savePlace(city, state);
     getLatLong(city, state);
-    getWeather(lat, lon);
+    // .then(response => {
+    //     console.log(response);
+    //     getWeather(response.lat, response.lon)
+    // });
     displayLocation(city, state);
 };
 
@@ -56,6 +60,7 @@ function getLatLong(city, state) {
                 if (response.status === 200) {
                     return response.json()
                     .then(post => {
+
                         console.log(post.results);
                         var lat = post.results[0].locations[0].displayLatLng.lat;
                         var lon = post.results[0].locations[0].displayLatLng.lng;
@@ -71,15 +76,16 @@ function getLatLong(city, state) {
 
     // get weather using lat and long from geoCall
     function getWeather(lat, lon) {
+        console.log(lat + " " + lon);
         const API_key = "3e3a8f9018bbc2c4f3ff15318e09efc6";
         var apiCall = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial" +
         "&appid=" + API_key;
         fetch(apiCall)
          .then(response => {
-             if (response.status === 200) {
+            // console.log(response);
                  return response.json()
                  .then(post => {
-                     console.log(post.current.weather[0].description);
+                     console.log(post.current.weather[0]);
                      document.getElementById('current-conditions').textContent = post.current.weather[0].description;
                      document.getElementById('current-temp').textContent = Math.round(post.current.temp);
                      document.getElementById('uv-index-now').textContent = "UV index of " + post.current.uvi;
@@ -111,12 +117,30 @@ function getLatLong(city, state) {
 
 
 
-                    document.getElementById('uv-index-day-1').textContent = "UV index of " + post.daily[0].uvi;
-                    document.getElementById('uv-index-day-2').textContent = "UV index of " + post.daily[1].uvi;
-                    document.getElementById('uv-index-day-3').textContent = "UV index of " + post.daily[2].uvi;
-                    document.getElementById('uv-index-day-4').textContent = "UV index of " + post.daily[3].uvi;
-                    document.getElementById('uv-index-day-5').textContent = "UV index of " + post.daily[4].uvi;
+                    // document.getElementById('uv-index-day-1').textContent = "UV index of " + post.daily[0].uvi;
+                    // document.getElementById('uv-index-day-2').textContent = "UV index of " + post.daily[1].uvi;
+                    // document.getElementById('uv-index-day-3').textContent = "UV index of " + post.daily[2].uvi;
+                    // document.getElementById('uv-index-day-4').textContent = "UV index of " + post.daily[3].uvi;
+                    // document.getElementById('uv-index-day-5').textContent = "UV index of " + post.daily[4].uvi;
+                    
+                    function uvIndexSeverity() {
+                        for (var i = 0; i < 5; i++) {
+                            var uvIndex = post.daily[i].uvi;
+                            console.log(i + " " + uvIndex);
+                            document.getElementById('uv-index-day-' + (i+1)).textContent = "UV index of " + post.daily[i].uvi;
+                            
+                            if (uvIndex < 3) {
+                                // document.getElementById('uv-index-day-' + (i+1)).addClass = 'favorable-UV'; 
+                                $('#uv-index-day-5').css('background-color', 'lightgreen');
+                            } else if ((uvIndex >= 3) && (uvIndex < 5)) {
+                                document.getElementById('uv-index-day-' + (i+1)).addClass = 'moderate-UV';
+                            } else if (uvIndex >= 5) {
+                                document.getElementById('uv-index-day-' + (i+1)).addClass = 'severe-UV';
+                            }
+                        }
+                    };
 
+                    uvIndexSeverity();
 
                     document.getElementById('wind-speed-1').textContent = "wind speed of " + post.daily[0].wind_speed;
                     document.getElementById('wind-speed-2').textContent = "wind speed of " + post.daily[1].wind_speed;
@@ -124,23 +148,11 @@ function getLatLong(city, state) {
                     document.getElementById('wind-speed-4').textContent = "wind speed of " + post.daily[3].wind_speed;
                     document.getElementById('wind-speed-5').textContent = "wind speed of " + post.daily[4].wind_speed;
                  });
-               } else {
-                 throw new Error('Something went wrong on api server!');
-               };
-               
+
          }
          )};
 
-    //     function tomorrow()
-    // {
-    //     var today = new Date();
-    //     // var todayPlusOne = today.getDate()+1;
-    //     var todayPlusOne = Date() + 1;
-        
-    //     console.log(todayPlusOne);
-    //     return todayPlusOne;   
-    // };
-    // tomorrow();
+ 
 
         function getDates() {
         var thisDay = new Date();
@@ -157,8 +169,31 @@ function getLatLong(city, state) {
         var thisDayPlusFour = new Date(thisDay);
         thisDayPlusFour.setDate(thisDayPlusFour.getDate() + 4); 
 
-        
- 
+        thisDay = thisDay.toString();
+        thisDay = thisDay.split(" ");
+        thisDay = thisDay.slice(1,3);
+        thisDay = thisDay.join(" ");
+            // console.log(thisDay);
+
+        thisDayPlusOne = thisDayPlusOne.toString();
+        thisDayPlusOne = thisDayPlusOne.split(" ");
+        thisDayPlusOne = thisDayPlusOne.slice(1,3);
+        thisDayPlusOne = thisDayPlusOne.join(" ");
+
+        thisDayPlusTwo = thisDayPlusTwo.toString();
+        thisDayPlusTwo = thisDayPlusTwo.split(" ");
+        thisDayPlusTwo = thisDayPlusTwo.slice(1,3);
+        thisDayPlusTwo = thisDayPlusTwo.join(" ");
+
+        thisDayPlusThree = thisDayPlusThree.toString();
+        thisDayPlusThree = thisDayPlusThree.split(" ");
+        thisDayPlusThree = thisDayPlusThree.slice(1,3);
+        thisDayPlusThree = thisDayPlusThree.join(" ");
+
+        thisDayPlusFour = thisDayPlusFour.toString();
+        thisDayPlusFour = thisDayPlusFour.split(" ");
+        thisDayPlusFour = thisDayPlusFour.slice(1,3);
+        thisDayPlusFour = thisDayPlusFour.join(" ");
         
         document.getElementById('date1').textContent = thisDay;
         document.getElementById('date2').textContent = thisDayPlusOne;
@@ -223,7 +258,8 @@ function getLatLong(city, state) {
      };
 
 
-    UV index
-    favorable = <3;
-    moderate = 3<=UV<5;
-    severe = >=5
+    // UV index
+    // favorable = <3;
+    // moderate = 3<=UV<5;
+    // severe = >=5
+
