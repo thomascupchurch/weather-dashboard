@@ -165,12 +165,7 @@ function getLatLong(city, state) {
         document.getElementById('date3').textContent = thisDayPlusTwo;
         document.getElementById('date4').textContent = thisDayPlusThree;
         document.getElementById('date5').textContent = thisDayPlusFour;
-
-
-
-
          }
-
          getDates();
 
         
@@ -228,4 +223,7 @@ function getLatLong(city, state) {
      };
 
 
-    
+    UV index
+    favorable = <3;
+    moderate = 3<=UV<5;
+    severe = >=5

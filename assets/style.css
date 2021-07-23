@@ -17,3 +17,15 @@ header {
 #current-card {
     background-color: lightblue;
 }
+
+.favorable-UV {
+    background-color:lightgreen;
+}
+
+.moderate-UV {
+    background-color:yellow;
+}
+
+.severe-UV {
+    background-color:orangered;
+}
