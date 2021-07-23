@@ -28,7 +28,6 @@ locationButton.addEventListener('click', clickBtn);
     
 
 function clickBtn() {
-    console.log("yes");
     var city = document.getElementById("city-input").value;
     var state = document.getElementById("state-input").value;
     savePlace(city, state);
@@ -37,13 +36,14 @@ function clickBtn() {
     //     console.log(response);
     //     getWeather(response.lat, response.lon)
     // });
-    displayLocation(city, state);
+    // city = city.toUppercase;
+    // state = state.toUppercase;
+    document.getElementById("location").textContent = city + ", " + state;
 };
 
 function savePlace(city, state) {
-    console.log(city, state);
     localStorage.setItem('city', city);
-    localStorage.setItem('state', state);  
+    localStorage.setItem('state', state);
 };
 // var geoLocation = (document.getElementById("city-input").value + ", " + document.getElementById("state-input").value);
 
@@ -117,30 +117,33 @@ function getLatLong(city, state) {
 
 
 
-                    // document.getElementById('uv-index-day-1').textContent = "UV index of " + post.daily[0].uvi;
-                    // document.getElementById('uv-index-day-2').textContent = "UV index of " + post.daily[1].uvi;
-                    // document.getElementById('uv-index-day-3').textContent = "UV index of " + post.daily[2].uvi;
-                    // document.getElementById('uv-index-day-4').textContent = "UV index of " + post.daily[3].uvi;
-                    // document.getElementById('uv-index-day-5').textContent = "UV index of " + post.daily[4].uvi;
+                    document.getElementById('uv-index-day-1').textContent = "UV index of " + post.daily[0].uvi;
+                    document.getElementById('uv-index-day-2').textContent = "UV index of " + post.daily[1].uvi;
+                    document.getElementById('uv-index-day-3').textContent = "UV index of " + post.daily[2].uvi;
+                    document.getElementById('uv-index-day-4').textContent = "UV index of " + post.daily[3].uvi;
+                    document.getElementById('uv-index-day-5').textContent = "UV index of " + post.daily[4].uvi;
                     
-                    function uvIndexSeverity() {
-                        for (var i = 0; i < 5; i++) {
-                            var uvIndex = post.daily[i].uvi;
-                            console.log(i + " " + uvIndex);
-                            document.getElementById('uv-index-day-' + (i+1)).textContent = "UV index of " + post.daily[i].uvi;
-                            
-                            if (uvIndex < 3) {
+            function uvIndexSeverity() {
+                for (var i = 0; i < 5; i++) {
+                   
+                    var uvIndex = post.daily[i].uvi;
+                    var uvIdDay = `${'"' + 'uv-index-day-' + (i+1) + '"'}`;
+                    console.log(uvIdDay + " " + uvIndex);     
+                    // console.log(i + " " + uvIndex);
+                    var uvBox = document.getElementById(uvIdDay);
+                       
+                    if (uvIndex < 3) {
                                 // document.getElementById('uv-index-day-' + (i+1)).addClass = 'favorable-UV'; 
-                                $('#uv-index-day-5').css('background-color', 'lightgreen');
-                            } else if ((uvIndex >= 3) && (uvIndex < 5)) {
-                                document.getElementById('uv-index-day-' + (i+1)).addClass = 'moderate-UV';
-                            } else if (uvIndex >= 5) {
-                                document.getElementById('uv-index-day-' + (i+1)).addClass = 'severe-UV';
-                            }
-                        }
+                        $(uvBox).setAttribute('class', 'favorable-UV');
+                     } else if ((uvIndex >= 3) && (uvIndex < 5)) {
+                        $(uvBox).setAttribute('class', 'moderate-UV');
+                    } else if (uvIndex >= 5) {
+                        $(uvBox).setAttribute('class', 'severe-UV');
                     };
 
-                    uvIndexSeverity();
+                }
+            };
+            uvIndexSeverity();
 
                     document.getElementById('wind-speed-1').textContent = "wind speed of " + post.daily[0].wind_speed;
                     document.getElementById('wind-speed-2').textContent = "wind speed of " + post.daily[1].wind_speed;
@@ -251,11 +254,12 @@ function getLatLong(city, state) {
          
 
 
-     function displayLocation() {
-     
-        document.getElementById("location").textContent = city, state;
-        
-     };
+    //  function displayLocation(city, state) {
+    //     city = city.toUppercase;
+    //     state = state.toUppercase;
+    //     document.getElementById("location").textContent = city + ", " + state;
+    //     console.log("it's running");
+    //  };
 
 
     // UV index
