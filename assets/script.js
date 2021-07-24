@@ -147,11 +147,10 @@ function getLatLong(city, state) {
                      document.getElementById('uv-index-now').textContent = "UV index of " + post.current.uvi;
                      document.getElementById('wind-speed-now').textContent = "wind speed of " + post.current.wind_speed + " mph";
                      
-                     console.log(post.current.weather[0].id);
+                   
                      var iconId = post.current.weather[0].icon;
                      var iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
-                    // $("#currentPic").css("background-image", ("url=" + iconUrl));
-                    $("#currentPic").attr("src", iconUrl);
+                        $("#currentPic").attr("src", iconUrl);
                     // if (post.current.weather[0].id >= 200 && post.current.weather[0].id < 300) {
                     //     iconId = "11d";
                     
@@ -173,6 +172,18 @@ function getLatLong(city, state) {
                     document.getElementById('day-3-conditions').textContent = post.daily[2].weather[0].main;
                     document.getElementById('day-4-conditions').textContent = post.daily[3].weather[0].main;
                     document.getElementById('day-5-conditions').textContent = post.daily[4].weather[0].main;
+
+                    $('#card1').attr("src", ("http://openweathermap.org/img/wn/" + post.daily[0].weather[0].icon + "@2x.png"));
+                    $('#card2').attr("src", ("http://openweathermap.org/img/wn/" + post.daily[1].weather[0].icon + "@2x.png"));
+                    $('#card3').attr("src", ("http://openweathermap.org/img/wn/" + post.daily[2].weather[0].icon + "@2x.png"));
+                    $('#card4').attr("src", ("http://openweathermap.org/img/wn/" + post.daily[3].weather[0].icon + "@2x.png"));
+                    $('#card5').attr("src", ("http://openweathermap.org/img/wn/" + post.daily[4].weather[0].icon + "@2x.png"));
+
+                    // var iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
+                    //    $("#currentPic").attr("src", iconUrl);)
+                    // iconId = post.current.weather[0].id;
+                    // iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
+                    //     $("#currentPic").attr("src", iconUrl);
 
                         // humidity forecast by day
                     document.getElementById('humidity-day-1').textContent = post.daily[0].humidity + "% humidity";
