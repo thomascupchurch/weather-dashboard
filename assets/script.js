@@ -1,19 +1,53 @@
+window.onload = function() {
+    generateButtons();
+}
+
+
+var thisDay = new Date();
+thisDay = thisDay.toString();
+thisDay = thisDay.split(" ");
+thisDay = thisDay.slice(1,3);
+thisDay = thisDay.join(" ");
+document.getElementById('date').textContent = thisDay;
+
+var placeArray = JSON.parse(localStorage.getItem("placeArray") || "[]");
+    
 
 // function to repopulate city and state with saved data
-document.getElementById('date').textContent = Date();
+
 var cityInput = document.getElementById("city-input").value;
 var stateInput = document.getElementById("state-input").value;
 var descriptionBox = document.getElementById('weather-description');
 var currentCard = document.getElementById('current-card');
 
-var loadFunction = function() {
-    // document.getElementById("city-input").value 
-    cityInput.value = localStorage.getItem('city');
-    // document.getElementById("state-input").value 
-    stateInput.value = localStorage.getItem('state');
-};
+function generateButtons() {
 
-loadFunction();
+    for (var i=0; i < placeArray.length; i++) {
+        var button = $("<button>");
+        var buttonPlaceCity = placeArray[i].city;
+        var buttonPlaceState = placeArray[i].state;
+        button.text(buttonPlaceCity + ", " + buttonPlaceState);
+        $("#buttonsDiv").append(button);
+        $(button).click(function() {
+            document.getElementById("city-input").value = buttonPlaceCity;
+            document.getElementById("state-input").value = buttonPlaceState;
+            console.log(buttonPlaceCity, buttonPlaceState);
+            clickBtn();
+        })
+    }      
+    };
+
+
+
+// var loadFunction = function() {
+//     // document.getElementById("city-input").value 
+//     cityInput.value = localStorage.getItem('city');
+//     // document.getElementById("state-input").value 
+//     stateInput.value = localStorage.getItem('state');
+// };
+
+// loadFunction();
+
 
 let lat = "";
 let lon = "";
@@ -43,9 +77,29 @@ function clickBtn() {
 };
 
 function savePlace(city, state) {
-    localStorage.setItem('city', city);
-    localStorage.setItem('state', state);
+    
+    // localStorage.setItem('city', city);
+    // localStorage.setItem('state', state);
+    var placeObj = {
+        city: city, 
+        state: state
+    }
+    placeArray.push(placeObj);
+    localStorage.setItem('placeArray', JSON.stringify(placeArray));
+
+
+
+
+    // localStorage.setItem('placeArray', JSON.stringify(placeArray));
+    // localStorage.setItem('city', city);
+    // localStorage.setItem('state', state);
+    // console.log(placeArray);
 };
+
+
+
+
+
 // var geoLocation = (document.getElementById("city-input").value + ", " + document.getElementById("state-input").value);
 
     // var city = document.getElementById("city-input").value;
@@ -91,43 +145,17 @@ function getLatLong(city, state) {
                      document.getElementById('current-conditions').textContent = post.current.weather[0].description;
                      document.getElementById('current-temp').textContent = Math.round(post.current.temp);
                      document.getElementById('uv-index-now').textContent = "UV index of " + post.current.uvi;
-                     document.getElementById('wind-speed-now').textContent = "wind speed of " + post.current.wind_speed;
+                     document.getElementById('wind-speed-now').textContent = "wind speed of " + post.current.wind_speed + " mph";
                      
+                     console.log(post.current.weather[0].id);
+                     var iconId = post.current.weather[0].icon;
+                     var iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
+                    // $("#currentPic").css("background-image", ("url=" + iconUrl));
+                    $("#currentPic").attr("src", iconUrl);
+                    // if (post.current.weather[0].id >= 200 && post.current.weather[0].id < 300) {
+                    //     iconId = "11d";
                     
-                        if (post.current.weather[0].description === 'clear sky') {
-                            var clearSkiesUrl = "assets/pictures/clear.png";
-                            $("#currentPic").css("background-image", ("url=" + clearSkiesUrl));
-                            $("#currentPic").attr("src", clearSkiesUrl);
-                        } else if (post.current.weather[0].description === 'Rain') {
-                            var rainUrl = "assets/pictures/rain.png";
-                            $("#currentPic").css("background-image", ("url=" + rainUrl));
-                            $("#currentPic").attr("src", rainUrl);
-                        } else if (post.current.weather[0].description === 'haze') {
-                            var hazeUrl = "assets/pictures/fog.png";
-                            $("#currentPic").css("background-image", ("url=" + hazeUrl));
-                            $("#currentPic").attr("src", hazeUrl);
-                        } else if (post.current.weather[0].description === 'few clouds') {
-                            var fewCloudsUrl = "assets/pictures/partly-cloudy.png";
-                            $("#currentPic").css("background-image", ("url=" + fewCloudsUrl));
-                            $("#currentPic").attr("src", fewCloudsUrl);
-                        } else if (post.current.weather[0].description === 'overcast clouds') {
-                            var overcastCloudsUrl = "assets/pictures/fog.png";
-                            $("#currentPic").css("background-image", ("url=" + overcastCloudsUrl));
-                            $("#currentPic").attr("src", overcastCloudsUrl);
-                        } else if (post.current.weather[0].description === 'overcast clouds') {
-                            var overcastCloudsUrl = "assets/pictures/fog.png";
-                            $("#currentPic").css("background-image", ("url=" + overcastCloudsUrl));
-                            $("#currentPic").attr("src", overcastCloudsUrl);
-                        } else if (post.current.weather[0].description === 'light rain') {
-                            var lightRainUrl = "assets/pictures/rain.png";
-                            $("#currentPic").css("background-image", ("url=" + lightRainUrl));
-                            $("#currentPic").attr("src", lightRainUrl);
-                        } else if (post.current.weather[0].description === 'scattered clouds') {
-                            var scatteredCloudsUrl = "assets/pictures/partly-cloudy.png";
-                            $("#currentPic").css("background-image", ("url=" + scatteredCloudsUrl));
-                            $("#currentPic").attr("src", scatteredCloudsUrl);
-                        }
-                  
+                    
                     //  let weatherDescription = post.current.weather[0].description.value;
                         // descriptionBox.textContent = weatherDescription;
                         // console.log(weatherDescription);
@@ -171,11 +199,11 @@ function getLatLong(city, state) {
             
            
 
-                    document.getElementById('wind-speed-1').textContent = "wind speed of " + post.daily[0].wind_speed;
-                    document.getElementById('wind-speed-2').textContent = "wind speed of " + post.daily[1].wind_speed;
-                    document.getElementById('wind-speed-3').textContent = "wind speed of " + post.daily[2].wind_speed;
-                    document.getElementById('wind-speed-4').textContent = "wind speed of " + post.daily[3].wind_speed;
-                    document.getElementById('wind-speed-5').textContent = "wind speed of " + post.daily[4].wind_speed;
+                    document.getElementById('wind-speed-1').textContent = "wind speed of " + post.daily[0].wind_speed + " mph";
+                    document.getElementById('wind-speed-2').textContent = "wind speed of " + post.daily[1].wind_speed + " mph";
+                    document.getElementById('wind-speed-3').textContent = "wind speed of " + post.daily[2].wind_speed + " mph";
+                    document.getElementById('wind-speed-4').textContent = "wind speed of " + post.daily[3].wind_speed + " mph";
+                    document.getElementById('wind-speed-5').textContent = "wind speed of " + post.daily[4].wind_speed + " mph";
                  });
 
          }
@@ -293,3 +321,65 @@ function getLatLong(city, state) {
     // moderate = 3<=UV<5;
     // severe = >=5
 
+// var iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
+
+
+
+// if (post.current.weather[0].id <= 200 && post.current.weather[0].id < 300) {
+//     var clearSkiesUrl = "http://openweathermap.org/img/wn/11d@2x.png";
+//     $("#currentPic").css("background-image", ("url=" + clearSkiesUrl));
+//     $("#currentPic").attr("src", clearSkiesUrl);
+// } else if (post.current.weather[0].description === 'Rain') {
+//     var rainUrl = "assets/pictures/rain.png";
+//     $("#currentPic").css("background-image", ("url=" + rainUrl));
+//     $("#currentPic").attr("src", rainUrl);
+// } else if (post.current.weather[0].description === 'haze') {
+//     var hazeUrl = "assets/pictures/fog.png";
+//     $("#currentPic").css("background-image", ("url=" + hazeUrl));
+//     $("#currentPic").attr("src", hazeUrl);
+// } else if (post.current.weather[0].description === 'few clouds') {
+//     var fewCloudsUrl = "assets/pictures/partly-cloudy.png";
+//     $("#currentPic").css("background-image", ("url=" + fewCloudsUrl));
+//     $("#currentPic").attr("src", fewCloudsUrl);
+// } else if (post.current.weather[0].description === 'overcast clouds') {
+//     var overcastCloudsUrl = "assets/pictures/fog.png";
+//     $("#currentPic").css("background-image", ("url=" + overcastCloudsUrl));
+//     $("#currentPic").attr("src", overcastCloudsUrl);
+// } else if (post.current.weather[0].description === 'overcast clouds') {
+//     var overcastCloudsUrl = "assets/pictures/fog.png";
+//     $("#currentPic").css("background-image", ("url=" + overcastCloudsUrl));
+//     $("#currentPic").attr("src", overcastCloudsUrl);
+// } else if (post.current.weather[0].description === 'light rain') {
+//     var lightRainUrl = "assets/pictures/rain.png";
+//     $("#currentPic").css("background-image", ("url=" + lightRainUrl));
+//     $("#currentPic").attr("src", lightRainUrl);
+// } else if (post.current.weather[0].description === 'scattered clouds') {
+//     var scatteredCloudsUrl = "assets/pictures/partly-cloudy.png";
+//     $("#currentPic").css("background-image", ("url=" + scatteredCloudsUrl));
+//     $("#currentPic").attr("src", scatteredCloudsUrl);
+// }
+
+// } else if (post.current.weather[0].id >= 300 && post.current.weather[0].id < 400) {
+//     iconId = "09d";
+// } else if (post.current.weather[0].id >= 500 && post.current.weather[0].id < 600) {
+//     iconId = "10d";
+// } else if (post.current.weather[0].id >= 600 && post.current.weather[0].id < 700) {
+//     iconId = "13d";
+// } else if (post.current.weather[0].id >= 700 && post.current.weather[0].id < 800) {
+//     iconId = "50d";
+// } else if (post.current.weather[0].id === 800) {
+//     iconId = "01d";
+// } 
+// // else if (post.current.weather[0].id === 800 && *nighttime*) {
+// //     iconId = "01n";
+// // } 
+// else if (post.current.weather[0].id > 800 && post.current.weather[0].id < 900) {
+//     iconId = "02d";
+// } 
+// // else if (post.current.weather[0].id >= 800 && post.current.weather[0].id < 900) {
+// //     iconId = "02n";
+// // }
+// ;
+
+// $("#currentPic").css("background-image", ("url=" + iconUrl));
+// // $("#currentPic").attr("src", iconUrl);

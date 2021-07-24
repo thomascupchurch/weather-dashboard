@@ -13,7 +13,7 @@ header {
 #title {
     color: white;
     font-size: 30px;
-    
+    text-align: center;
 }
 
 #current-card {
@@ -35,4 +35,8 @@ header {
 .severe-UV {
     border:orangered;
     background-color:orangered;
+}
+
+#currentPic {
+    background-color: navy;
 }
