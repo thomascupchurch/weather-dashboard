@@ -17,13 +17,37 @@
     </header>
 
     <section class="row">
-        <form id="submit-form" class="col-3">
+        <section class="col-3">
+            <form id="submit-form">
             <input id="city-input" type="text" placeholder="City">
             <input id="state-input" type="text" placeholder="State (two letters)">
-            
-        </form>
-        <button id="location-btn">Click Here</button>
+            </form>
+            <button id="location-btn">Click Here</button>
+        </section>
 
+        <section class="col-4">
+            <card id="current-card">
+                <h2>Current Conditions</h2>
+                <h3 id='date'></h3>
+               
+                    <p id='location' style="background-color: lightblue;"></p>
+        
+                    <p id='current-conditions'></p>
+                    
+                    <p id='current-temp'></p>
+        
+                    <p id="uv-index-now"></p>
+        
+                    <p id="wind-speed-now"></p>
+            </card>
+        </section>
+
+        <section class='col-3'>
+            <img id="currentPic" alt="picture of a sunny sky">
+        </section>
+    </section>
+
+    <section class='row'>
         <div class="col-9">
             <div>
                 <h2>5-Day Forecast</h2>
@@ -89,24 +113,8 @@
             </div>
         </div>
     </section>
-    <card id="current-card">
-        <h2>Current Conditions</h2>
-       
-            <p id='location' style="background-color: lightblue;"></p>
-
-            <p id='current-conditions'></p>
-            
-            <p id='current-temp'></p>
-
-            <p id="uv-index-now"></p>
-
-            <p id="wind-speed-now"></p>
-
-        
-    </card>
-    <section>
-        
-    </section>
+    
+    
 
 
     <!--<script src="/javascripts/jquery.js" type="text/javascript"></script>-->

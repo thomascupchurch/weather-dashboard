@@ -1,9 +1,10 @@
 
 // function to repopulate city and state with saved data
-
+document.getElementById('date').textContent = Date();
 var cityInput = document.getElementById("city-input").value;
 var stateInput = document.getElementById("state-input").value;
 var descriptionBox = document.getElementById('weather-description');
+var currentCard = document.getElementById('current-card');
 
 var loadFunction = function() {
     // document.getElementById("city-input").value 
@@ -76,6 +77,7 @@ function getLatLong(city, state) {
 
     // get weather using lat and long from geoCall
     function getWeather(lat, lon) {
+        var currentCard = document.getElementById('current-card');
         console.log(lat + " " + lon);
         const API_key = "3e3a8f9018bbc2c4f3ff15318e09efc6";
         var apiCall = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial" +
@@ -90,6 +92,42 @@ function getLatLong(city, state) {
                      document.getElementById('current-temp').textContent = Math.round(post.current.temp);
                      document.getElementById('uv-index-now').textContent = "UV index of " + post.current.uvi;
                      document.getElementById('wind-speed-now').textContent = "wind speed of " + post.current.wind_speed;
+                     
+                    
+                        if (post.current.weather[0].description === 'clear sky') {
+                            var clearSkiesUrl = "assets/pictures/clear.png";
+                            $("#currentPic").css("background-image", ("url=" + clearSkiesUrl));
+                            $("#currentPic").attr("src", clearSkiesUrl);
+                        } else if (post.current.weather[0].description === 'Rain') {
+                            var rainUrl = "assets/pictures/rain.png";
+                            $("#currentPic").css("background-image", ("url=" + rainUrl));
+                            $("#currentPic").attr("src", rainUrl);
+                        } else if (post.current.weather[0].description === 'haze') {
+                            var hazeUrl = "assets/pictures/fog.png";
+                            $("#currentPic").css("background-image", ("url=" + hazeUrl));
+                            $("#currentPic").attr("src", hazeUrl);
+                        } else if (post.current.weather[0].description === 'few clouds') {
+                            var fewCloudsUrl = "assets/pictures/partly-cloudy.png";
+                            $("#currentPic").css("background-image", ("url=" + fewCloudsUrl));
+                            $("#currentPic").attr("src", fewCloudsUrl);
+                        } else if (post.current.weather[0].description === 'overcast clouds') {
+                            var overcastCloudsUrl = "assets/pictures/fog.png";
+                            $("#currentPic").css("background-image", ("url=" + overcastCloudsUrl));
+                            $("#currentPic").attr("src", overcastCloudsUrl);
+                        } else if (post.current.weather[0].description === 'overcast clouds') {
+                            var overcastCloudsUrl = "assets/pictures/fog.png";
+                            $("#currentPic").css("background-image", ("url=" + overcastCloudsUrl));
+                            $("#currentPic").attr("src", overcastCloudsUrl);
+                        } else if (post.current.weather[0].description === 'light rain') {
+                            var lightRainUrl = "assets/pictures/rain.png";
+                            $("#currentPic").css("background-image", ("url=" + lightRainUrl));
+                            $("#currentPic").attr("src", lightRainUrl);
+                        } else if (post.current.weather[0].description === 'scattered clouds') {
+                            var scatteredCloudsUrl = "assets/pictures/partly-cloudy.png";
+                            $("#currentPic").css("background-image", ("url=" + scatteredCloudsUrl));
+                            $("#currentPic").attr("src", scatteredCloudsUrl);
+                        }
+                  
                     //  let weatherDescription = post.current.weather[0].description.value;
                         // descriptionBox.textContent = weatherDescription;
                         // console.log(weatherDescription);
@@ -123,27 +161,15 @@ function getLatLong(city, state) {
                     document.getElementById('uv-index-day-4').textContent = "UV index of " + post.daily[3].uvi;
                     document.getElementById('uv-index-day-5').textContent = "UV index of " + post.daily[4].uvi;
                     
-            function uvIndexSeverity() {
-                for (var i = 0; i < 5; i++) {
-                   
-                    var uvIndex = post.daily[i].uvi;
-                    var uvIdDay = `${'"' + 'uv-index-day-' + (i+1) + '"'}`;
-                    console.log(uvIdDay + " " + uvIndex);     
-                    // console.log(i + " " + uvIndex);
-                    var uvBox = document.getElementById(uvIdDay);
-                       
-                    if (uvIndex < 3) {
-                                // document.getElementById('uv-index-day-' + (i+1)).addClass = 'favorable-UV'; 
-                        $(uvBox).setAttribute('class', 'favorable-UV');
-                     } else if ((uvIndex >= 3) && (uvIndex < 5)) {
-                        $(uvBox).setAttribute('class', 'moderate-UV');
-                    } else if (uvIndex >= 5) {
-                        $(uvBox).setAttribute('class', 'severe-UV');
+                    if (post.daily[0].uvi < 3) {
+                        $("#uv-index-now").css("background-color", 'lightgreen');
+                    } else if ((post.daily[0].uvi >= 3) && (post.daily[0].uvi < 5)) {
+                        $("#uv-index-now").css("background-color", 'yellow');
+                    } else if (post.daily[0].uvi >= 5) {
+                        $("#uv-index-now").css("background-color", 'red');
                     };
-
-                }
-            };
-            uvIndexSeverity();
+            
+           
 
                     document.getElementById('wind-speed-1').textContent = "wind speed of " + post.daily[0].wind_speed;
                     document.getElementById('wind-speed-2').textContent = "wind speed of " + post.daily[1].wind_speed;
