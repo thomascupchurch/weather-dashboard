@@ -39,16 +39,6 @@ function generateButtons() {
 
 
 
-// var loadFunction = function() {
-//     // document.getElementById("city-input").value 
-//     cityInput.value = localStorage.getItem('city');
-//     // document.getElementById("state-input").value 
-//     stateInput.value = localStorage.getItem('state');
-// };
-
-// loadFunction();
-
-
 let lat = "";
 let lon = "";
 let city = "";
@@ -67,19 +57,10 @@ function clickBtn() {
     var state = document.getElementById("state-input").value;
     savePlace(city, state);
     getLatLong(city, state);
-    // .then(response => {
-    //     console.log(response);
-    //     getWeather(response.lat, response.lon)
-    // });
-    // city = city.toUppercase;
-    // state = state.toUppercase;
     document.getElementById("location").textContent = city + ", " + state;
 };
-
+// add city and state to local storage
 function savePlace(city, state) {
-    
-    // localStorage.setItem('city', city);
-    // localStorage.setItem('state', state);
     var placeObj = {
         city: city, 
         state: state
@@ -87,26 +68,8 @@ function savePlace(city, state) {
     placeArray.push(placeObj);
     localStorage.setItem('placeArray', JSON.stringify(placeArray));
 
-
-
-
-    // localStorage.setItem('placeArray', JSON.stringify(placeArray));
-    // localStorage.setItem('city', city);
-    // localStorage.setItem('state', state);
-    // console.log(placeArray);
 };
 
-
-
-
-
-// var geoLocation = (document.getElementById("city-input").value + ", " + document.getElementById("state-input").value);
-
-    // var city = document.getElementById("city-input").value;
-
-    // var state = document.getElementById("state-input").value;
-    
-    
  // get lat and long from user inputs of city and state  
 function getLatLong(city, state) {
     var geoCall = "http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + city + "," + state; 
@@ -151,13 +114,7 @@ function getLatLong(city, state) {
                      var iconId = post.current.weather[0].icon;
                      var iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
                         $("#currentPic").attr("src", iconUrl);
-                    // if (post.current.weather[0].id >= 200 && post.current.weather[0].id < 300) {
-                    //     iconId = "11d";
                     
-                    
-                    //  let weatherDescription = post.current.weather[0].description.value;
-                        // descriptionBox.textContent = weatherDescription;
-                        // console.log(weatherDescription);
 
                         // general daytime temp forecast for each day
                     document.getElementById('day-1').textContent = Math.round(post.daily[0].temp.day);
@@ -179,12 +136,7 @@ function getLatLong(city, state) {
                     $('#card4').attr("src", ("http://openweathermap.org/img/wn/" + post.daily[3].weather[0].icon + "@2x.png"));
                     $('#card5').attr("src", ("http://openweathermap.org/img/wn/" + post.daily[4].weather[0].icon + "@2x.png"));
 
-                    // var iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
-                    //    $("#currentPic").attr("src", iconUrl);)
-                    // iconId = post.current.weather[0].id;
-                    // iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
-                    //     $("#currentPic").attr("src", iconUrl);
-
+        
                         // humidity forecast by day
                     document.getElementById('humidity-day-1').textContent = post.daily[0].humidity + "% humidity";
                     document.getElementById('humidity-day-2').textContent = post.daily[1].humidity + "% humidity";
@@ -193,13 +145,13 @@ function getLatLong(city, state) {
                     document.getElementById('humidity-day-5').textContent = post.daily[4].humidity + "% humidity";
 
 
-
+                        // uv index by day
                     document.getElementById('uv-index-day-1').textContent = "UV index of " + post.daily[0].uvi;
                     document.getElementById('uv-index-day-2').textContent = "UV index of " + post.daily[1].uvi;
                     document.getElementById('uv-index-day-3').textContent = "UV index of " + post.daily[2].uvi;
                     document.getElementById('uv-index-day-4').textContent = "UV index of " + post.daily[3].uvi;
                     document.getElementById('uv-index-day-5').textContent = "UV index of " + post.daily[4].uvi;
-                    
+                        // function for styling based on uv index severity
                     if (post.daily[0].uvi < 3) {
                         $("#uv-index-now").css("background-color", 'lightgreen');
                     } else if ((post.daily[0].uvi >= 3) && (post.daily[0].uvi < 5)) {
@@ -207,9 +159,7 @@ function getLatLong(city, state) {
                     } else if (post.daily[0].uvi >= 5) {
                         $("#uv-index-now").css("background-color", 'red');
                     };
-            
-           
-
+                        // daily windspeed forecasts
                     document.getElementById('wind-speed-1').textContent = "wind speed of " + post.daily[0].wind_speed + " mph";
                     document.getElementById('wind-speed-2').textContent = "wind speed of " + post.daily[1].wind_speed + " mph";
                     document.getElementById('wind-speed-3').textContent = "wind speed of " + post.daily[2].wind_speed + " mph";
@@ -219,9 +169,7 @@ function getLatLong(city, state) {
 
          }
          )};
-
- 
-
+         // get accurate dates for upcoming five days
         function getDates() {
         var thisDay = new Date();
         // construct tomorrow
@@ -241,8 +189,8 @@ function getLatLong(city, state) {
         thisDay = thisDay.split(" ");
         thisDay = thisDay.slice(1,3);
         thisDay = thisDay.join(" ");
-            // console.log(thisDay);
-
+            
+            // dealing with dates and getting them to the right format
         thisDayPlusOne = thisDayPlusOne.toString();
         thisDayPlusOne = thisDayPlusOne.split(" ");
         thisDayPlusOne = thisDayPlusOne.slice(1,3);
@@ -271,22 +219,9 @@ function getLatLong(city, state) {
          }
          getDates();
 
-        
-             
-        // let str = thisDayPlusOne;
-        // const thisDayPlusOneArr = str.split(" ");
-        // console.log(thisDayPlusOneArr);
          
-    
+            // get accurate names for days of the week
          function getDay() {
-        //  var thisDate = Date();
-        //     console.log(thisDate);
-        //     var tomorrow = new Date(day+1);
-        //     console.log(tomorrow);
-
-        //     var d = new Date();
-        //     console.log(d.getDate());
-
         
          var dayOfWeek = Date().split(" ");
          var today = dayOfWeek[0];
@@ -311,86 +246,4 @@ function getLatLong(city, state) {
          };
          
          getDay();
-         
-         
-        //  function getDays(today) {
-
-        //  }
-         
-
-
-    //  function displayLocation(city, state) {
-    //     city = city.toUppercase;
-    //     state = state.toUppercase;
-    //     document.getElementById("location").textContent = city + ", " + state;
-    //     console.log("it's running");
-    //  };
-
-
-    // UV index
-    // favorable = <3;
-    // moderate = 3<=UV<5;
-    // severe = >=5
-
-// var iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
-
-
-
-// if (post.current.weather[0].id <= 200 && post.current.weather[0].id < 300) {
-//     var clearSkiesUrl = "http://openweathermap.org/img/wn/11d@2x.png";
-//     $("#currentPic").css("background-image", ("url=" + clearSkiesUrl));
-//     $("#currentPic").attr("src", clearSkiesUrl);
-// } else if (post.current.weather[0].description === 'Rain') {
-//     var rainUrl = "assets/pictures/rain.png";
-//     $("#currentPic").css("background-image", ("url=" + rainUrl));
-//     $("#currentPic").attr("src", rainUrl);
-// } else if (post.current.weather[0].description === 'haze') {
-//     var hazeUrl = "assets/pictures/fog.png";
-//     $("#currentPic").css("background-image", ("url=" + hazeUrl));
-//     $("#currentPic").attr("src", hazeUrl);
-// } else if (post.current.weather[0].description === 'few clouds') {
-//     var fewCloudsUrl = "assets/pictures/partly-cloudy.png";
-//     $("#currentPic").css("background-image", ("url=" + fewCloudsUrl));
-//     $("#currentPic").attr("src", fewCloudsUrl);
-// } else if (post.current.weather[0].description === 'overcast clouds') {
-//     var overcastCloudsUrl = "assets/pictures/fog.png";
-//     $("#currentPic").css("background-image", ("url=" + overcastCloudsUrl));
-//     $("#currentPic").attr("src", overcastCloudsUrl);
-// } else if (post.current.weather[0].description === 'overcast clouds') {
-//     var overcastCloudsUrl = "assets/pictures/fog.png";
-//     $("#currentPic").css("background-image", ("url=" + overcastCloudsUrl));
-//     $("#currentPic").attr("src", overcastCloudsUrl);
-// } else if (post.current.weather[0].description === 'light rain') {
-//     var lightRainUrl = "assets/pictures/rain.png";
-//     $("#currentPic").css("background-image", ("url=" + lightRainUrl));
-//     $("#currentPic").attr("src", lightRainUrl);
-// } else if (post.current.weather[0].description === 'scattered clouds') {
-//     var scatteredCloudsUrl = "assets/pictures/partly-cloudy.png";
-//     $("#currentPic").css("background-image", ("url=" + scatteredCloudsUrl));
-//     $("#currentPic").attr("src", scatteredCloudsUrl);
-// }
-
-// } else if (post.current.weather[0].id >= 300 && post.current.weather[0].id < 400) {
-//     iconId = "09d";
-// } else if (post.current.weather[0].id >= 500 && post.current.weather[0].id < 600) {
-//     iconId = "10d";
-// } else if (post.current.weather[0].id >= 600 && post.current.weather[0].id < 700) {
-//     iconId = "13d";
-// } else if (post.current.weather[0].id >= 700 && post.current.weather[0].id < 800) {
-//     iconId = "50d";
-// } else if (post.current.weather[0].id === 800) {
-//     iconId = "01d";
-// } 
-// // else if (post.current.weather[0].id === 800 && *nighttime*) {
-// //     iconId = "01n";
-// // } 
-// else if (post.current.weather[0].id > 800 && post.current.weather[0].id < 900) {
-//     iconId = "02d";
-// } 
-// // else if (post.current.weather[0].id >= 800 && post.current.weather[0].id < 900) {
-// //     iconId = "02n";
-// // }
-// ;
-
-// $("#currentPic").css("background-image", ("url=" + iconUrl));
-// // $("#currentPic").attr("src", iconUrl);
+      
