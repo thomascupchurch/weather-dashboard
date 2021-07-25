@@ -72,7 +72,7 @@ function savePlace(city, state) {
 
  // get lat and long from user inputs of city and state  
 function getLatLong(city, state) {
-    var geoCall = "http://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + city + "," + state; 
+    var geoCall = "https://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + city + "," + state; 
         fetch(geoCall)
         .then(response => {
                 if (response.status === 200) {
@@ -112,7 +112,7 @@ function getLatLong(city, state) {
                      
                    
                      var iconId = post.current.weather[0].icon;
-                     var iconUrl = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
+                     var iconUrl = "https://openweathermap.org/img/wn/" + iconId + "@2x.png";
                         $("#currentPic").attr("src", iconUrl);
                     
 
