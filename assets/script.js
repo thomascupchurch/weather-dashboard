@@ -1,6 +1,6 @@
-window.onload = function() {
-    generateButtons();
-}
+// window.onload = function() {
+//     generateButtons();
+// }
 
 
 var thisDay = new Date();
@@ -72,7 +72,8 @@ function savePlace(city, state) {
  // get lat and long from user inputs of city and state  
 function getLatLong(city, state) {
     var geoCall = "https://open.mapquestapi.com/geocoding/v1/address?key=" + geoKey + "&location=" + city + "," + state; 
-        fetch(geoCall)
+    console.log(geoCall);    
+    fetch(geoCall)
         .then(response => {
                 if (response.status === 200) {
                     return response.json()
