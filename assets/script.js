@@ -44,14 +44,11 @@ let lon = "";
 let city = "";
 let state = "";
 const geoKey = "sSeG8IzoZGYpxJxzrfbl21xhjdOKmvan";
-// let geoCall = "";
-
 
 // function for saving location when button is clicked
 var locationButton = document.getElementById("location-btn");
 locationButton.addEventListener('click', clickBtn);
-    
-
+ // function to be executed when user clicks the 'click here' button
 function clickBtn() {
     var city = document.getElementById("city-input").value;
     var state = document.getElementById("state-input").value;
@@ -64,10 +61,12 @@ function savePlace(city, state) {
     var placeObj = {
         city: city, 
         state: state
-    }
-    placeArray.push(placeObj);
-    localStorage.setItem('placeArray', JSON.stringify(placeArray));
-
+    };
+    if ((placeArray.indexOf(placeObj.city) === -1) && (placeArray.indexOf(placeObj.state) === -1)) {
+        placeArray.push(placeObj);
+        localStorage.setItem('placeArray', JSON.stringify(placeArray));
+    };
+    generateButtons();
 };
 
  // get lat and long from user inputs of city and state  
