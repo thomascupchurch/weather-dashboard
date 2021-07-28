@@ -1,6 +1,6 @@
-// window.onload = function() {
-//     generateButtons();
-// }
+window.onload = function() {
+    generateButtons();
+}
 
 
 var thisDay = new Date();
@@ -110,6 +110,14 @@ function getLatLong(city, state) {
                      document.getElementById('uv-index-now').textContent = "UV index of " + post.current.uvi;
                      document.getElementById('wind-speed-now').textContent = "wind speed of " + post.current.wind_speed + " mph";
                      
+                    if (post.current.uvi < 3) {
+                        $("#uv-index-now").css("background-color", 'lightgreen');
+                    } else if ((post.current.uvi >= 3) && (post.current.uvi < 5)) {
+                        $("#uv-index-now").css("background-color", 'yellow');
+                    } else if (post.current.uvi >= 5) {
+                        $("#uv-index-now").css("background-color", 'red');
+                    };
+
                    
                      var iconId = post.current.weather[0].icon;
                      var iconUrl = "https://openweathermap.org/img/wn/" + iconId + "@2x.png";
@@ -152,13 +160,52 @@ function getLatLong(city, state) {
                     document.getElementById('uv-index-day-4').textContent = "UV index of " + post.daily[3].uvi;
                     document.getElementById('uv-index-day-5').textContent = "UV index of " + post.daily[4].uvi;
                         // function for styling based on uv index severity
-                    if (post.daily[0].uvi < 3) {
-                        $("#uv-index-now").css("background-color", 'lightgreen');
+                    
+                        if (post.daily[0].uvi < 3) {
+                        $("#uv-index-day-1").css("background-color", 'lightgreen');
                     } else if ((post.daily[0].uvi >= 3) && (post.daily[0].uvi < 5)) {
-                        $("#uv-index-now").css("background-color", 'yellow');
+                        $("#uv-index-day-1").css("background-color", 'yellow');
                     } else if (post.daily[0].uvi >= 5) {
-                        $("#uv-index-now").css("background-color", 'red');
+                        $("#uv-index-day-1").css("background-color", 'red');
                     };
+
+                    if (post.daily[1].uvi < 3) {
+                        $("#uv-index-day-2").css("background-color", 'lightgreen');
+                    } else if ((post.daily[1].uvi >= 3) && (post.daily[1].uvi < 5)) {
+                        $("#uv-index-day-2").css("background-color", 'yellow');
+                    } else if (post.daily[1].uvi >= 5) {
+                        $("#uv-index-day-2").css("background-color", 'red');
+                    };
+
+                    if (post.daily[2].uvi < 3) {
+                        $("#uv-index-day-3").css("background-color", 'lightgreen');
+                    } else if ((post.daily[2].uvi >= 3) && (post.daily[2].uvi < 5)) {
+                        $("#uv-index-day-3").css("background-color", 'yellow');
+                    } else if (post.daily[2].uvi >= 5) {
+                        $("#uv-index-day-3").css("background-color", 'red');
+                    };
+
+                    if (post.daily[3].uvi < 3) {
+                        $("#uv-index-day-4").css("background-color", 'lightgreen');
+                    } else if ((post.daily[3].uvi >= 3) && (post.daily[3].uvi < 5)) {
+                        $("#uv-index-day-4").css("background-color", 'yellow');
+                    } else if (post.daily[3].uvi >= 5) {
+                        $("#uv-index-day-4").css("background-color", 'red');
+                    };
+
+                    if (post.daily[4].uvi < 3) {
+                        $("#uv-index-day-5").css("background-color", 'lightgreen');
+                    } else if ((post.daily[4].uvi >= 3) && (post.daily[4].uvi < 5)) {
+                        $("#uv-index-day-5").css("background-color", 'yellow');
+                    } else if (post.daily[4].uvi >= 5) {
+                        $("#uv-index-day-5").css("background-color", 'red');
+                    };
+
+
+
+
+
+
                         // daily windspeed forecasts
                     document.getElementById('wind-speed-1').textContent = "wind speed of " + post.daily[0].wind_speed + " mph";
                     document.getElementById('wind-speed-2').textContent = "wind speed of " + post.daily[1].wind_speed + " mph";
