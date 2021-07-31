@@ -2,11 +2,12 @@
 
 ## Includes 
 CSS
+Bootstrap
 HTML
 JS
 
 ## screenshot
-'assets/Screen Shot 2021-07-25 at 11.42.00 AM.png'
+![title](assets/weather-screenshot.png)
 
 ## links
 deployed url: https://thomascupchurch.github.io/weather-dashboard/

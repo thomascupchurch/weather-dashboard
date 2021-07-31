@@ -21,23 +21,36 @@ var descriptionBox = document.getElementById('weather-description');
 var currentCard = document.getElementById('current-card');
 
 function generateButtons() {
-
+    $("#buttonsDiv").empty();
     for (var i=0; i < placeArray.length; i++) {
         var button = $("<button>");
         var buttonPlaceCity = placeArray[i].city;
         var buttonPlaceState = placeArray[i].state;
         button.text(buttonPlaceCity + ", " + buttonPlaceState);
+        button.attr('city', buttonPlaceCity);
+        button.attr('state', buttonPlaceState);
         $("#buttonsDiv").append(button);
-        $(button).click(function() {
-            document.getElementById("city-input").value = buttonPlaceCity;
-            document.getElementById("state-input").value = buttonPlaceState;
-            console.log(buttonPlaceCity, buttonPlaceState);
-            clickBtn();
+        
+        $(button).click(function(event) {
+            if (event.target === locationButton) {
+                clickBtn();
+            } else {
+                city = $(event.target).attr('city');
+                state = $(event.target).attr('state');
+                savePlace(city, state);
+                getLatLong(city, state);
+                document.getElementById("location").textContent = city + ", " + state;
+            }
+            
+            // document.getElementById("city-input").value = buttonPlaceCity;
+            // document.getElementById("state-input").value = buttonPlaceState;
+            // console.log(buttonPlaceCity, buttonPlaceState);
+            // clickBtn();
         })
     }      
     };
 
-
+    
 
 let lat = "";
 let lon = "";
@@ -49,23 +62,46 @@ const geoKey = "sSeG8IzoZGYpxJxzrfbl21xhjdOKmvan";
 var locationButton = document.getElementById("location-btn");
 locationButton.addEventListener('click', clickBtn);
  // function to be executed when user clicks the 'click here' button
-function clickBtn() {
+
+// function searchBtn() {
+//     var city = document.getElementById("city-input").value;
+//     var state = document.getElementById("state-input").value;
+//     savePlace(city, state);
+//     getLatLong(city, state);
+//     console.log('cearchBtn has been called');
+// }
+
+
+ function clickBtn() {
     var city = document.getElementById("city-input").value;
     var state = document.getElementById("state-input").value;
     savePlace(city, state);
     getLatLong(city, state);
     document.getElementById("location").textContent = city + ", " + state;
 };
+    
+    
+
 // add city and state to local storage
 function savePlace(city, state) {
+    
     var placeObj = {
         city: city, 
         state: state
     };
-    if ((placeArray.indexOf(placeObj.city) === -1) && (placeArray.indexOf(placeObj.state) === -1)) {
+
+    var locationAlready = false;
+    for (var i = 0; i < placeArray.length; i++) {
+        if ((placeArray[i].city === placeObj.city) && (placeArray[i].state === placeObj.state)) {
+            locationAlready = true;
+        }
+    }
+    if (locationAlready === false) {
         placeArray.push(placeObj);
         localStorage.setItem('placeArray', JSON.stringify(placeArray));
-    };
+    }  
+    // && (placeArray.indexOf(placeObj.state) === -1)) 
+    
     generateButtons();
 };
 
